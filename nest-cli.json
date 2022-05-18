@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "api/inventory": {
+      "type": "library",
+      "root": "libs/api/inventory",
+      "entryFile": "index",
+      "sourceRoot": "libs/api/inventory/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/api/inventory/tsconfig.lib.json"
+      }
+    }
+  },
+  "compilerOptions": {
+    "webpack": true
+  }
+}

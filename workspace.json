@@ -2,6 +2,7 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
+    "api-inventory": "apps/api/inventory",
     "inventory": "apps/inventory",
     "orders": "apps/orders",
     "shell": "apps/shell",
