@@ -1,8 +1,8 @@
-
-
 # SampleErp
 
-This project was generated using [Nx](https://nx.dev).
+This project was generated using [Nx](https://nx.dev/module-federation/faster-builds)
+
+- `npx create-nx-workspace sample-erp --preset=empty`.
 
 <p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
@@ -79,8 +79,6 @@ Run `nx graph` to see a diagram of the dependencies of your projects.
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
 
-
-
 ## ☁ Nx Cloud
 
 ### Distributed Computation Caching & Distributed Task Execution
@@ -92,3 +90,10 @@ Nx Cloud pairs with Nx in order to enable you to build and test code more rapidl
 Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
 
 Visit [Nx Cloud](https://nx.app/) to learn more.
+
+## Useful links
+
+1. micro frontend example repo: [adv-mf-examples](https://github.com/manfredsteyer/adv-mf-examples)
+2. module federation example: [module federation](https://github.com/nrwl/ng-module-federation)
+3. angular nest nx example: [angular and nest](https://www.thisdot.co/blog/nx-workspace-with-angular-and-nest)
+4. enterprise folder structure: [nx for enterprise](https://nx.dev/guides/monorepo-nx-enterprise)
