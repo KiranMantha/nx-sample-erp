@@ -2,94 +2,36 @@
 
 This project was generated using [Nx](https://nx.dev/module-federation/faster-builds)
 
-- `npx create-nx-workspace sample-erp --preset=empty`.
+## Steps to create nx monorepo from scratch
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
+1. create an empty workspace wothout any presets `npx create-nx-workspace <your-workspace-name> --preset=empty`.
+2. navigate to new workspace and add a `host` angular application, which acts as a placeholder to project multiple angular MFE applications, by running `nx g @nrwl/angular:host shell --remotes=about`
 
-🔎 **Smart, Fast and Extensible Build System**
+- the above command creates an application named `shell` which acts as a host with its own webpack configuration. remotes is a list of MFEs for which shell acts as a host to.
 
-## Adding capabilities to your workspace
+3. now create a remote MFE `about` by running command `nx g @nrwl/angular:remote about --host=shell`
 
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
+- this command create a remote application named `about` with its own webpack configuration. this application can be accessed via its own port or via shell (whoch we will see shortly).
 
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
+4. inorder to check whether the `remotes` (here about is a remote) are properly configured to `host` shell application, navigate to `module-federation.config.js` in `host` shell application. it should have `about` in remotes array. in future if you need to create another remote MFE with same `host` then repeat 3rd step. it should automatically update module-federation.config.js of `host` application with new remote.
+5. the `remotes` in monorepo should expose their routing module to work in sync with `host` application if they have routing else they can expose AppModule. please check the remotes in this application and their respective `module-federation.config.js` files for more info.
+6. with all above structure in place, run `nx serve <your-host-application-name> --open --devRemotes=<comma-seperated-remote-application-names>`. this will serve all the applications under monorepo.
+7. if you want to run a specific application then run `nx serve <your-application-name> --open`. this is independent of either the apllication is a host or a remote.
 
-Below are our core plugins:
+### Pro Tip
 
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
+1. you can create applications or libs in nx monorepo using [nx console](https://marketplace.visualstudio.com/items?itemName=nrwl.angular-console) vscode extension.
+2. remember that only `@nrwl/application` has ability to create `host` or `remote` applications.
+3. If you want to create application via `nx console` extension then select the extension and:
 
-There are also many [community plugins](https://nx.dev/community) you could add.
-
-## Generate an application
-
-Run `nx g @nrwl/react:app my-app` to generate an application.
-
-> You can use any of the plugins above to generate applications as well.
-
-When using Nx, you can create multiple applications and libraries in the same workspace.
-
-## Generate a library
-
-Run `nx g @nrwl/react:lib my-lib` to generate a library.
-
-> You can also use any of the plugins above to generate libraries as well.
-
-Libraries are shareable across libraries and applications. They can be imported from `@sample-erp/mylib`.
-
-## Development server
-
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `nx g @nrwl/react:component my-component --project=my-app` to generate a new component.
-
-## Build
-
-Run `nx build my-app` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `nx test my-app` to execute the unit tests via [Jest](https://jestjs.io).
-
-Run `nx affected:test` to execute the unit tests affected by a change.
-
-## Running end-to-end tests
-
-Run `nx e2e my-app` to execute the end-to-end tests via [Cypress](https://www.cypress.io).
-
-Run `nx affected:e2e` to execute the end-to-end tests affected by a change.
-
-## Understand your workspace
-
-Run `nx graph` to see a diagram of the dependencies of your projects.
-
-## Further help
-
-Visit the [Nx Documentation](https://nx.dev) to learn more.
-
-## ☁ Nx Cloud
-
-### Distributed Computation Caching & Distributed Task Execution
-
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+- select generate option and select `@nrwl/angular` application under options
+- set application name
+- select federationType as `static`
+- check `mfe` checkbox
+- if you are creating remote application then mention host name under `host` field and select `remote` option in `mfeType` dropdown.
+- if you are creating host application mention all the remote application names under `remotes` field and select `host` option in `mfeType` dropdown
+- check `standaloneConfig` checkbox. this will create a seperate `project.json` file for new application instead of updating `nx.json`. this is for application maintainability.
+- check `strict` checkbox for strict type checking.
 
 ## Useful links
 
@@ -97,3 +39,5 @@ Visit [Nx Cloud](https://nx.app/) to learn more.
 2. module federation example: [module federation](https://github.com/nrwl/ng-module-federation)
 3. angular nest nx example: [angular and nest](https://www.thisdot.co/blog/nx-workspace-with-angular-and-nest)
 4. enterprise folder structure: [nx for enterprise](https://nx.dev/guides/monorepo-nx-enterprise)
+5. ngrx and nx course: [course](https://duncanhunter.gitbook.io/enterprise-angular-applications-with-ngrx-and-nx/introduction/0-environment-setup)
+6. MFE architecture nx angular: [MFE architecture](https://nx.dev/module-federation/micro-frontend-architecture)
