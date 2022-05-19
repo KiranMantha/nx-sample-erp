@@ -1,4 +1,6 @@
-.header {
+nav {
+  background-color: #333;
+  padding: 10px;
   ul {
     margin: 0;
     padding: 0;
@@ -6,7 +8,17 @@
     display: flex;
 
     li {
-      padding: calc(var(--spacing));
+      padding: 10px;
+      a {
+        padding: 10px;
+        color: #fff;
+        text-decoration: none;
+
+        &:hover,
+        &:focus {
+          background-color: #444;
+        }
+      }
     }
   }
 }
